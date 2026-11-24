@@ -1,3 +1,48 @@
+# Simulation results visualiser
+
+A React and TypeScript app for exploring simulation results: a 100 x 100 grid of temperature and
+pressure readings over 30 iterations. Each cell is coloured by value, drawn on a canvas, and
+played back as an animation. Data streams in from a small Express API in pages, so playback can
+start before everything has loaded.
+
+Built as a front-end take-home assessment for PhysicsX.
+
+![Playback](docs/screenshots/playback.gif)
+
+| Hover for exact values | Pressure, with a range filter |
+|---|---|
+| ![Tooltip](docs/screenshots/tooltip.png) | ![Pressure with range filter](docs/screenshots/pressure-filter.png) |
+
+## Features
+
+- **Canvas-rendered heat map** of 10,000 cells, with colours precomputed per iteration and repainted
+  only when needed
+- **Temperature, Pressure and Kelvin** views, each with its own colour scale
+- **Tooltip** with the row, column and exact value under the cursor
+- **Playback:** play and pause, step forward and back, reset, and a speed slider
+- **Range filter** to highlight only the values between a chosen minimum and maximum
+- **Paginated loading:** the first iterations arrive with the grid and the rest load in the
+  background, and stepping forward waits until the next page is ready
+- **Tests:** 53 Vitest tests covering parsing, API shape validation, delta application, colour
+  scales, the visualisation component and the server
+
+## Quick start
+
+Requires Node.js 18 or later. Run the API and the app in two terminals:
+
+```bash
+npm install
+node server.js     # API on http://localhost:5001
+npm run dev        # app on http://localhost:5173, then open /resultViz
+npm test           # run the tests
+```
+
+`generate_test_data.py` creates the large `data_test.json` data set the server uses.
+
+The rest of this README is my write-up of the approach, as submitted.
+
+---
+
 # Objective:
 A visualiser for a grid of temperature or pressure data, with the ability to step through iterations of data and see how the values change over time. The grid should be colour-coded to indicate the range of values, and there should be a tooltip that shows the exact value when hovering over a cell. The user should also be able to play an animation of the data changing over time, with controls to adjust the speed of the animation.
 
